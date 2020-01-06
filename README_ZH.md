@@ -1,4 +1,4 @@
-# Gogs test
+# Gogs
 
 Gogs 是一款极易搭建的自助 Git 服务。
 

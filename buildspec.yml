@@ -5,12 +5,12 @@ phases:
     commands:
       - echo CODEBUILD_SRC_DIR - $CODEBUILD_SRC_DIR
       - echo GOPATH - $GOPATH
+      - export GO111MODULE="on" 
 
   build:
     commands:
       - echo Build started on `date`
       - echo Getting packages
-      - rm $GOPATH/go.mod
       - go get ./...
       - echo Compiling the Go code...
       - go build -o gogs gogs.go

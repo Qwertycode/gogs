@@ -13,6 +13,7 @@ phases:
       - echo Build started on `date`
       - echo Getting packages
 #      - go get ./...
+      - go get github.com/urfave/cli
       - echo Compiling the Go code...
       - go build -o gogs gogs.go
   post_build:

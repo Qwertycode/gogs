@@ -2,6 +2,8 @@ version: 0.2
 
 phases:
   install: 
+    runtime-versions:
+      golang: 1.13
     commands:
       - echo CODEBUILD_SRC_DIR - $CODEBUILD_SRC_DIR
       - echo GOPATH - $GOPATH
@@ -12,7 +14,7 @@ phases:
       - echo Getting packages
       - go get ./...
       - echo Compiling the Go code...
-      - go build -o gogs
+      - go build -o gogs gogs.go
   post_build:
     commands:
       - echo Build completed on `date`

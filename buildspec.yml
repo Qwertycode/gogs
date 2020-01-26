@@ -23,5 +23,7 @@ artifacts:
   files:
     - gogs
     - buildspec.yml
+    - appspec.yml
     - production.conf	
     - infrastructure.yml
+    - codedeploy/*

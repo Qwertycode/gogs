@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: /gogs
+  - source: /
     destination: /opt
 hooks:
   BeforeInstall:

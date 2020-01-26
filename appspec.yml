@@ -1,0 +1,14 @@
+version: 0.0
+os: linux
+files:
+  - source: /gogs
+    destination: /opt
+hooks:
+  BeforeInstall:
+    - location: codedeploy/BeforeInstall.sh
+  AfterInstall:
+    - location: codedeploy/AfterInstall.sh
+  ApplicationStop:
+    - location: codedeploy/ApplicationStop.sh
+  ApplicationStart:
+    - location: codedeploy/ApplicationStart.sh

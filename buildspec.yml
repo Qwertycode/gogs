@@ -1,29 +1,27 @@
 version: 0.2
 
 phases:
-  install: 
-    runtime-versions:
-      golang: 1.13
+  pre_build:
     commands:
-      - echo CODEBUILD_SRC_DIR - $CODEBUILD_SRC_DIR
-      - echo GOPATH - $GOPATH
-      - export GO111MODULE="on" 
-
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+      - IMAGE_NAME="gogs"
+      - REPOSITORY_URI=693550056929.dkr.ecr.us-east-1.amazonaws.com/gogs
+      - IMAGE_TAG=prod_$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
   build:
     commands:
       - echo Build started on `date`
-      - echo Getting packages
-      - go get ./...
-      - echo Compiling the Go code...
-      - go build -o gogs gogs.go
+      - echo Building the Docker image...
+      - echo Image_tag $IMAGE_TAG
+      - docker build -t $REPOSITORY_URI:latest .
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG 
   post_build:
     commands:
       - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - echo Writing image definitions file...
+      - printf '[{"name":"imageapi-container","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 artifacts:
-  files:
-    - gogs
-    - buildspec.yml
-    - appspec.yml
-    - production.conf	
-    - infrastructure.yml
-    - codedeploy/*
+    files: imagedefinitions.json

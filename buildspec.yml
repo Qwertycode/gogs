@@ -22,3 +22,6 @@ phases:
 artifacts:
   files:
     - gogs
+    - buildspec.yml
+    - production.conf	
+    - infrastructure.yml

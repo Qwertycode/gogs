@@ -10,7 +10,7 @@ node {
     stage('Build image') {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
-        sh "docker build --build-arg APP_NAME=gogs -t 693550056929.dkr.ecr.us-east-1.amazonaws.com/gogs:latest -f Dockerfile ."
+        sh "docker build -t gogs ."
     }
 
     stage('Test image') {
@@ -23,8 +23,8 @@ node {
     }
 
     stage('Push image') {
-        docker.withRegistry('https://693550056929.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:ECR') {
-            sh "docker push 693550056929.dkr.ecr.us-east-1.amazonaws.com/gogs:latest"
+        docker.withRegistry("https://693550056929.dkr.ecr.us-east-1.amazonaws.com", "ecr:us-east-1:ECR") {
+            docker.image("gogs").push()
         }
     }
 }

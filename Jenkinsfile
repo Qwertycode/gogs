@@ -13,7 +13,7 @@ stages {
         docker build on the command line */
         steps{
         script{
-            docker.withRegistry("https://693550056929.dkr.ecr.us-east-1.amazonaws.co$
+            docker.withRegistry("https://693550056929.dkr.ecr.us-east-1.amazonaws.com", "ecr:us-east-1:ECR") {
                 app = docker.build("gogs:${env.BUILD_ID}")
             }
         }
@@ -24,7 +24,7 @@ stages {
         * docker push on the command line */
         steps{
         script{
-            docker.withRegistry("https://693550056929.dkr.ecr.us-east-1.amazonaws.co$
+            docker.withRegistry("https://693550056929.dkr.ecr.us-east-1.amazonaws.com", "ecr:us-east-1:ECR") {
                 app.push()
                 app.push('latest')
             }
@@ -33,3 +33,4 @@ stages {
     }
 }
 }
+

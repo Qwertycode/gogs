@@ -1,4 +1,5 @@
 
+agent { node { label 'docker' } }
 node() {
     def app
     stage('Clone repository') { /* Let's make sure we have the
